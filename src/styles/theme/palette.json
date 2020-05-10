@@ -1,0 +1,12 @@
+{
+  "palette": {
+    "common": {
+      "black": "#000",
+      "white": "#fff"
+    },
+    "background": {
+      "paper": "#fff",
+      "default": "#fafafa"
+    }
+  }
+}

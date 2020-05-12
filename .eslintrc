@@ -4,6 +4,7 @@
     "es6": true
   },
   "extends": [
+    "plugin:you-dont-need-lodash-underscore/compatible",
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
@@ -12,7 +13,8 @@
     "plugin:jest/recommended",
     "plugin:jest/style",
     "airbnb",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "prettier/react"
   ],
   "globals": {
     "Atomics": "readonly",

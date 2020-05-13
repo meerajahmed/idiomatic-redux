@@ -15,7 +15,7 @@ const createStore = (reducer) => {
     };
   };
   // init store
-  dispatch({});
+  dispatch({ type: '@@INIT' });
 
   return {
     getState,

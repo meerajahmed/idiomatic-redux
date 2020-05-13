@@ -1,7 +1,7 @@
 import React from 'react';
 import AddTodo from '../../../components/molecules/AddTodo';
 import FooterLinks from '../../../components/molecules/FooterLinks';
-import VisibleTodoList from '../../molecules/VisibleTodoList';
+import TodoList from '../../molecules/TodoList';
 import { Provider } from '../../../lib/react-redux';
 import createStore from '../../../lib/redux/createStore';
 import reducers from './reducers';
@@ -21,7 +21,7 @@ const Todos = () => {
   return (
     <Provider store={store}>
       <AddTodo />
-      <VisibleTodoList />
+      <TodoList />
       <FooterLinks />
     </Provider>
   );

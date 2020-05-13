@@ -1,30 +1,39 @@
 import React, { PureComponent } from 'react';
 import { ReactReduxContext } from '../Context';
 
-const connect = (mapStateToProps = () => ({}), mapDispatchToProps = () => ({})) => (Component) => {
-  class Wrapper extends PureComponent {
-    constructor(props) {
-      super(props);
-      this.unsubscribe = null;
-    }
+const connect = (mapStateToProps, mapDispatchToProps = (dispatch) => ({ dispatch })) => (
+  Component
+) => {
+  const shouldHandleStateChanges = Boolean(mapStateToProps);
 
+  class Wrapper extends PureComponent {
     componentDidMount() {
       const { store } = this.context;
-      this.unsubscribe = store.subscribe(() => {
-        this.forceUpdate();
-      });
+      if (shouldHandleStateChanges) {
+        this.unsubscribe = store.subscribe(() => {
+          this.forceUpdate();
+        });
+      }
     }
 
     componentWillUnmount() {
-      this.unsubscribe();
+      if (this.unsubscribe) {
+        this.unsubscribe();
+      }
     }
 
     getMappedProps = () => {
       const { store } = this.context;
       const state = store.getState();
+      if (shouldHandleStateChanges) {
+        return {
+          ...this.props,
+          ...mapStateToProps(state, this.props),
+          ...mapDispatchToProps(store.dispatch, this.props),
+        };
+      }
       return {
         ...this.props,
-        ...mapStateToProps(state, this.props),
         ...mapDispatchToProps(store.dispatch, this.props),
       };
     };

@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
-import { ReactReduxContext } from '../../../lib/react-redux/Context';
+import PropTypes from 'prop-types';
+import connect from '../../../lib/react-redux/connect';
 
 /**
  * AddTodo cannot be classified as either a presentational component or as a container component because
@@ -15,27 +16,20 @@ const uniqueId = () => {
   return uid;
 };
 
+/**
+ * The connect code without any arguments is going to generate a container component that does not
+ * subscribe to store. However, that will pass dispatch to the component that it wraps
+ * */
+
 class AddTodo extends Component {
   constructor(props) {
     super(props);
-    this.unsubscribe = null;
     this.input = createRef();
   }
 
-  componentDidMount() {
-    const { store } = this.context;
-    this.unsubscribe = store.subscribe(() => {
-      this.forceUpdate();
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   onAddTodo = (text) => {
-    const { store } = this.context;
-    store.dispatch({
+    const { dispatch } = this.props;
+    dispatch({
       type: 'ADD_TODO',
       id: uniqueId(),
       text,
@@ -60,6 +54,12 @@ class AddTodo extends Component {
   }
 }
 
-AddTodo.contextType = ReactReduxContext;
+AddTodo.defaultProps = {
+  dispatch: () => {},
+};
 
-export default AddTodo;
+AddTodo.propTypes = {
+  dispatch: PropTypes.func,
+};
+
+export default connect()(AddTodo);

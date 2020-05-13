@@ -1,5 +1,6 @@
 import FilterButton from '../../../components/atoms/FilterButton';
 import { connect } from '../../../lib/react-redux';
+import { setVisibilityFilter } from '../../organisms/Todos/actions';
 
 /**
  * As a container component, the filter link doesn't have its own markup.
@@ -14,11 +15,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onClick: () =>
-      dispatch({
-        type: 'SET_VISIBILITY_FILTER',
-        filter: ownProps.filter,
-      }),
+    onClick: () => dispatch(setVisibilityFilter(ownProps.filter)),
   };
 };
 

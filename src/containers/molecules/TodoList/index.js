@@ -1,6 +1,7 @@
 import TodoList from '../../../components/molecules/TodoList';
 import getVisibleTodos from '../../organisms/Todos/selectors';
 import { connect } from '../../../lib/react-redux';
+import { toggleTodos } from '../../organisms/Todos/actions';
 
 /**
  * All container components are similar. Their job is to connect a presentational component to the
@@ -18,10 +19,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onTodoClick: (id) => {
-      dispatch({
-        type: 'TOGGLE_TODO',
-        id,
-      });
+      dispatch(toggleTodos(id));
     },
   };
 };

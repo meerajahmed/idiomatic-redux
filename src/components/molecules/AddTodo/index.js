@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import connect from '../../../lib/react-redux/connect';
+import { addTodos } from '../../../containers/organisms/Todos/actions';
 
 /**
  * AddTodo cannot be classified as either a presentational component or as a container component because
@@ -9,12 +10,6 @@ import connect from '../../../lib/react-redux/connect';
  *
  * However, in this case, we can keep them together because there isn't any state and the UI is very simple
  * */
-
-let uid = 0;
-const uniqueId = () => {
-  uid += 1;
-  return uid;
-};
 
 /**
  * The connect code without any arguments is going to generate a container component that does not
@@ -29,11 +24,7 @@ class AddTodo extends Component {
 
   onAddTodo = (text) => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'ADD_TODO',
-      id: uniqueId(),
-      text,
-    });
+    dispatch(addTodos(text));
   };
 
   render() {

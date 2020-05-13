@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import store from '../../../containers/organisms/Todos/store';
+import { ReactReduxContext } from '../../../lib/react-redux/Context';
 
 /**
  * AddTodo cannot be classified as either a presentational component or as a container component because
@@ -23,6 +23,7 @@ class AddTodo extends Component {
   }
 
   componentDidMount() {
+    const { store } = this.context;
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate();
     });
@@ -33,6 +34,7 @@ class AddTodo extends Component {
   }
 
   onAddTodo = (text) => {
+    const { store } = this.context;
     store.dispatch({
       type: 'ADD_TODO',
       id: uniqueId(),
@@ -57,5 +59,7 @@ class AddTodo extends Component {
     );
   }
 }
+
+AddTodo.contextType = ReactReduxContext;
 
 export default AddTodo;

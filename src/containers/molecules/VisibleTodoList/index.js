@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import store from '../../organisms/Todos/store';
 import TodoList from '../../../components/molecules/TodoList';
 import getVisibleTodos from '../../organisms/Todos/selectors';
+import { ReactReduxContext } from '../../../lib/react-redux/Context';
 
 /**
  * All container components are similar. Their job is to connect a presentational component to the
@@ -15,6 +15,7 @@ class VisibleTodoList extends Component {
   }
 
   componentDidMount() {
+    const { store } = this.context;
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate();
     });
@@ -25,6 +26,7 @@ class VisibleTodoList extends Component {
   }
 
   onTodoClick = (id) => {
+    const { store } = this.context;
     store.dispatch({
       type: 'TOGGLE_TODO',
       id,
@@ -32,10 +34,13 @@ class VisibleTodoList extends Component {
   };
 
   render() {
-    const { todos, visibilityFilter } = store.getStore();
+    const { store } = this.context;
+    const { todos, visibilityFilter } = store.getState();
     const visibleTodos = getVisibleTodos(todos, visibilityFilter);
     return <TodoList todos={visibleTodos} onTodoClick={this.onTodoClick} />;
   }
 }
+
+VisibleTodoList.contextType = ReactReduxContext;
 
 export default VisibleTodoList;

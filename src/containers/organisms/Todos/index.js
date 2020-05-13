@@ -2,6 +2,11 @@ import React from 'react';
 import AddTodo from '../../../components/molecules/AddTodo';
 import FooterLinks from '../../../components/molecules/FooterLinks';
 import VisibleTodoList from '../../molecules/VisibleTodoList';
+import { Provider } from '../../../lib/react-redux';
+import createStore from '../../../lib/redux/createStore';
+import reducers from './reducers';
+
+const store = createStore(reducers);
 
 /**
  * Separating the container and the presentational components is often a good idea, but you
@@ -14,11 +19,11 @@ import VisibleTodoList from '../../molecules/VisibleTodoList';
 
 const Todos = () => {
   return (
-    <>
+    <Provider store={store}>
       <AddTodo />
       <VisibleTodoList />
       <FooterLinks />
-    </>
+    </Provider>
   );
 };
 

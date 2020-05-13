@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --env.mode=development --open",
+    "prod": "webpack-dev-server --env.mode=production --open",
     "build": "webpack",
     "build:dev": "npm run build -- --env.mode=development",
     "build:prod": "npm run build -- --env.mode=production",
@@ -14,7 +15,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "nuke:cache": "rimraf ./node_modules/.cache"
   },
   "repository": {
     "type": "git",

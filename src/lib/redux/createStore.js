@@ -1,7 +1,7 @@
 const createStore = (reducer) => {
   let state;
   let listeners = [];
-  const getStore = () => state;
+  const getState = () => state;
 
   const dispatch = (action) => {
     state = reducer(state, action);
@@ -18,7 +18,7 @@ const createStore = (reducer) => {
   dispatch({});
 
   return {
-    getStore,
+    getState,
     dispatch,
     subscribe,
   };

@@ -1,5 +1,5 @@
-const createStore = (reducer) => {
-  let state;
+const createStore = (reducer, preloadedState) => {
+  let state = preloadedState;
   let listeners = [];
   const getState = () => state;
 

@@ -1,12 +1,8 @@
-let uid = 0;
-const uniqueId = () => {
-  uid += 1;
-  return uid;
-};
+import { v4 as uuid } from 'uuid';
 
 const addTodos = (text) => ({
   type: 'ADD_TODO',
-  id: uniqueId(),
+  id: uuid(),
   text,
 });
 

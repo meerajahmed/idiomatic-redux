@@ -9,19 +9,15 @@ import { toggleTodos } from '../../organisms/Todos/actions';
  * */
 
 // data
-const mapStateToProps = (state) => {
-  return {
-    todos: getVisibleTodos(state.todos, state.visibilityFilter),
-  };
-};
+const mapStateToProps = (state) => ({
+  todos: getVisibleTodos(state.todos, state.visibilityFilter),
+});
 
 // behaviour
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onTodoClick: (id) => {
-      dispatch(toggleTodos(id));
-    },
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  onTodoClick(id) {
+    dispatch(toggleTodos(id));
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

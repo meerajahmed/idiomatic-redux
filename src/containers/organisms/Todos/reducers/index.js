@@ -1,5 +1,5 @@
 import combineReducers from '../../../../lib/redux/combineReducers';
-import todos from './todos';
+import todos, * as fromTodos from './todos';
 /* import visibilityFilter from './visibilityFilter'; */
 
 /* const todoApp = (state = {}, action) => {
@@ -14,3 +14,9 @@ export default combineReducers({
   todos,
   /* visibilityFilter, */
 });
+
+/*
+ * Encapsulate the knowledge about the state shape in the file that manage the state (state.todos),
+ * so that the components don’t have to rely on it.
+ * */
+export const getVisibleTodos = (state, filter) => fromTodos.getVisibleTodos(state.todos, filter);

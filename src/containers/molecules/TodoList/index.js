@@ -1,8 +1,8 @@
 import { withRouter } from 'react-router-dom';
 import TodoList from '../../../components/molecules/TodoList';
-import getVisibleTodos from '../../organisms/Todos/selectors';
 import { connect } from '../../../lib/react-redux';
 import { toggleTodos } from '../../organisms/Todos/actions';
+import { getVisibleTodos } from '../../organisms/Todos/reducers';
 
 /**
  * All container components are similar. Their job is to connect a presentational component to the
@@ -17,7 +17,7 @@ const mapStateToProps = (state, props) => {
     },
   } = props;
   return {
-    todos: getVisibleTodos(state.todos, filter),
+    todos: getVisibleTodos(state, filter),
   };
 };
 

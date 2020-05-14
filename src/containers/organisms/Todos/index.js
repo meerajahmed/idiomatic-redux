@@ -3,26 +3,9 @@ import AddTodo from '../../../components/molecules/AddTodo';
 import FooterLinks from '../../../components/molecules/FooterLinks';
 import TodoList from '../../molecules/TodoList';
 import { Provider } from '../../../lib/react-redux';
-import createStore from '../../../lib/redux/createStore';
-import reducers from './reducers';
-import { loadState, saveState } from '../../../utils/localStorage';
-import debounce from '../../../utils/debounce';
+import configureStore from './configureStore';
 
-/** hydrating persisted data */
-const preloadedState = loadState();
-
-const store = createStore(reducers, preloadedState);
-
-store.subscribe(
-  debounce(() => {
-    /* we want to persist just the data and not the UI state */
-    const { todos } = store.getState();
-    saveState({ todos });
-  }, 1000)
-);
-
-// eslint-disable-next-line no-console
-console.log(store.getState());
+const store = configureStore();
 
 /**
  * Separating the container and the presentational components is often a good idea, but you

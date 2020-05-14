@@ -14,7 +14,7 @@ const Routes = () => (
       <Route path={process.env.ROUTE_DEV} component={DevPage} />
       <Route path={process.env.ROUTE_ABOUT} component={AboutPage} />
       <Route path={process.env.ROUTE_TASK} component={TaskPage} />
-      <Route path={process.env.ROUTE_TODO} component={TodoPage} />
+      <Route path={`${process.env.ROUTE_TODO}/:filter?`} component={TodoPage} />
       <Route path={process.env.ROUTE_HOME} exact component={HomePage} />
       <Route component={NotFoundPage} />
     </Switch>

@@ -1,5 +1,5 @@
 import React from 'react';
-import FilterLink from '../../../containers/molecules/FilterLink';
+import FilterLink from '../../atoms/FilterLink';
 
 /**
  * The FooterLinks component receives onFilterClick and currentFilter props from the parent component
@@ -15,9 +15,9 @@ import FilterLink from '../../../containers/molecules/FilterLink';
 const FooterLinks = () => {
   return (
     <p>
-      show: <FilterLink filter="SHOW_ALL">All</FilterLink>{' '}
-      <FilterLink filter="SHOW_ACTIVE">Active</FilterLink>{' '}
-      <FilterLink filter="SHOW_COMPLETED">Completed</FilterLink>
+      show: <FilterLink filter="all">All</FilterLink>{' '}
+      <FilterLink filter="active">Active</FilterLink>{' '}
+      <FilterLink filter="completed">Completed</FilterLink>
     </p>
   );
 };

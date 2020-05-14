@@ -1,6 +1,6 @@
 import combineReducers from '../../../../lib/redux/combineReducers';
 import todos from './todos';
-import visibilityFilter from './visibilityFilter';
+/* import visibilityFilter from './visibilityFilter'; */
 
 /* const todoApp = (state = {}, action) => {
   // reducer composition
@@ -12,5 +12,5 @@ import visibilityFilter from './visibilityFilter';
 
 export default combineReducers({
   todos,
-  visibilityFilter,
+  /* visibilityFilter, */
 });

@@ -5,6 +5,7 @@ const paths = require('../paths');
 const config = {
   entry: paths.entry,
   output: {
+    publicPath: '/',
     path: paths.output,
   },
   module: {

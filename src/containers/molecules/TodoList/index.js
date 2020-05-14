@@ -1,3 +1,4 @@
+import { withRouter } from 'react-router-dom';
 import TodoList from '../../../components/molecules/TodoList';
 import getVisibleTodos from '../../organisms/Todos/selectors';
 import { connect } from '../../../lib/react-redux';
@@ -9,9 +10,16 @@ import { toggleTodos } from '../../organisms/Todos/actions';
  * */
 
 // data
-const mapStateToProps = (state) => ({
-  todos: getVisibleTodos(state.todos, state.visibilityFilter),
-});
+const mapStateToProps = (state, props) => {
+  const {
+    match: {
+      params: { filter = 'all' },
+    },
+  } = props;
+  return {
+    todos: getVisibleTodos(state.todos, filter),
+  };
+};
 
 // behaviour
 const mapDispatchToProps = (dispatch) => ({
@@ -20,4 +28,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TodoList));

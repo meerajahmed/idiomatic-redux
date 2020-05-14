@@ -1,31 +1,48 @@
 import todo from './todo';
+import combineReducers from '../../../../lib/redux/combineReducers';
 
-const initialState = [];
+// this has two concerns how the array is updated and how an individual todo is updated.
+// reducers can call other reducers to delegate the handling of some part of state they manage
 
-const todos = (state = initialState, action) => {
-  // this has two concerns how the array is updated and how an individual todo is updated.
+const byId = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      return [...state, todo(undefined, action)];
     case 'TOGGLE_TODO':
-      // reducers can call other reducers to delegate the handling of some part of state they manage
-      return state.map((t) => todo(t, action));
+      return {
+        ...state,
+        [action.id]: todo(state[action.id], action),
+      };
     default:
       return state;
   }
 };
+
+const allIds = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return [...state, action.id];
+    default:
+      return state;
+  }
+};
+
+const getAllTodos = (state) => state.allIds.map((id) => state.byId[id]);
 
 export const getVisibleTodos = (state, filter) => {
+  const allTodos = getAllTodos(state);
   switch (filter) {
     case 'all':
-      return state;
+      return allTodos;
     case 'completed':
-      return state.filter((t) => t.completed);
+      return allTodos.filter((t) => t.completed);
     case 'active':
-      return state.filter((t) => !t.completed);
+      return allTodos.filter((t) => !t.completed);
     default:
-      return state;
+      return allTodos;
   }
 };
 
-export default todos;
+export default combineReducers({
+  byId,
+  allIds,
+});

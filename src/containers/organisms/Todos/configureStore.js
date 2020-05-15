@@ -1,45 +1,8 @@
 import createStore from '../../../lib/redux/createStore';
 import reducers from './reducers';
-
-const promise = () => (next) => (action) => {
-  /*
-   * Now, we can dispatch both actions and promises that resolve to actions
-   * */
-  if (typeof action.then === 'function') {
-    /* Wait for the promise to resolve before dispatching the action */
-    return action.then(next);
-  }
-  return next(action);
-};
-/*
- * mental model: function with several arguments that are applied as they become available
- * */
-const logging = (store) => (next) => {
-  /* eslint-disable no-console */
-  if (!console.group) {
-    return next;
-  }
-  return (action) => {
-    console.group(action.type);
-    console.log('%c prev state', 'color:grey', store.getState());
-    console.log('%c action', 'color:blue', action);
-    next(action);
-    console.log('%c next state', 'color:green', store.getState());
-    console.groupEnd();
-  };
-  /* eslint-disable no-console */
-};
-
-const wrapDispatchWithMiddlewares = (store, middlewares) => {
-  // slice -> clone
-  middlewares
-    .slice()
-    .reverse()
-    .forEach(() => {
-      // eslint-disable-next-line no-param-reassign
-      store.dispatch = middlewares(store)(store.dispatch);
-    });
-};
+import { applyMiddleware } from '../../../lib/redux';
+import logger from '../../../lib/redux-logger';
+import promise from '../../../lib/redux-promise';
 
 const configureStore = () => {
   /** hydrating persisted data */
@@ -57,12 +20,12 @@ const configureStore = () => {
 
   if (__DEV__) {
     // store.dispatch = addLoggingToDispatch(store);
-    middlewares.push(logging);
+    middlewares.push(logger);
   }
 
   // store.dispatch = addPromiseSupportToDispatch(store); order in which the dispatch is overridden
 
-  wrapDispatchWithMiddlewares(store, middlewares);
+  applyMiddleware(store, middlewares);
 
   /*
   store.subscribe(

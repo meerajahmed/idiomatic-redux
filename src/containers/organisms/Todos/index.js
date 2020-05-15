@@ -1,9 +1,9 @@
 import React from 'react';
-import AddTodo from '../../../components/molecules/AddTodo';
-import FooterLinks from '../../../components/molecules/FooterLinks';
-import TodoList from '../../molecules/TodoList';
 import { Provider } from '../../../lib/react-redux';
 import configureStore from './configureStore';
+import AddTodo from '../../../components/molecules/AddTodo';
+import VisibleTodoList from '../../molecules/VisibleTodoList';
+import FooterLinks from '../../../components/molecules/FooterLinks';
 
 const store = configureStore();
 
@@ -20,7 +20,7 @@ const Todos = () => {
   return (
     <Provider store={store}>
       <AddTodo />
-      <TodoList />
+      <VisibleTodoList />
       <FooterLinks />
     </Provider>
   );

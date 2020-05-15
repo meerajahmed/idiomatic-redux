@@ -6,6 +6,12 @@ const addTodos = (text) => ({
   text,
 });
 
+const receiveTodos = (filter, response) => ({
+  type: 'RECEIVE_TODOS',
+  filter,
+  response,
+});
+
 const toggleTodos = (id) => ({
   type: 'TOGGLE_TODO',
   id,
@@ -16,4 +22,4 @@ const setVisibilityFilter = (filter) => ({
   filter,
 });
 
-export { addTodos, toggleTodos, setVisibilityFilter };
+export { addTodos, receiveTodos, toggleTodos, setVisibilityFilter };

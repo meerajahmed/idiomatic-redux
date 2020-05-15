@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import TodoList from '../../../components/molecules/TodoList';
 import { connect } from '../../../lib/react-redux';
-import { toggleTodos, receiveTodos } from '../../organisms/Todos/actions';
+import * as actions from '../../organisms/Todos/actions';
 import { getVisibleTodos } from '../../organisms/Todos/reducers';
-import { fetchTodos } from '../../../api';
 
 /**
  * All container components are similar. Their job is to connect a presentational component to the
@@ -25,8 +24,8 @@ class VisibleTodoList extends Component {
   }
 
   fetchData = () => {
-    const { filter, onReceiveTodos } = this.props;
-    fetchTodos(filter).then((response) => onReceiveTodos(filter, response));
+    const { filter, fetchTodos } = this.props;
+    fetchTodos(filter);
   };
 
   render() {
@@ -51,16 +50,16 @@ const mapStateToProps = (state, props) => {
 // behaviour
 const mapDispatchToProps = (dispatch) => ({
   onTodoClick(id) {
-    dispatch(toggleTodos(id));
+    dispatch(actions.toggleTodos(id));
   },
-  onReceiveTodos(response) {
-    dispatch(receiveTodos(response));
+  fetchTodos(filter) {
+    dispatch(actions.fetchTodos(filter));
   },
 });
 
 VisibleTodoList.propTypes = {
   filter: PropTypes.string.isRequired,
-  onReceiveTodos: PropTypes.func.isRequired,
+  fetchTodos: PropTypes.func.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VisibleTodoList));

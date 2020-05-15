@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import * as api from '../../../api';
 
 const addTodos = (text) => ({
   type: 'ADD_TODO',
@@ -12,6 +13,10 @@ const receiveTodos = (filter, response) => ({
   response,
 });
 
+/* asynchronous action creator */
+const fetchTodos = (filter) =>
+  api.fetchTodos(filter).then((response) => receiveTodos(filter, response));
+
 const toggleTodos = (id) => ({
   type: 'TOGGLE_TODO',
   id,
@@ -22,4 +27,4 @@ const setVisibilityFilter = (filter) => ({
   filter,
 });
 
-export { addTodos, receiveTodos, toggleTodos, setVisibilityFilter };
+export { addTodos, fetchTodos, toggleTodos, setVisibilityFilter };

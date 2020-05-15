@@ -1,36 +1,8 @@
 import createStore from '../../../lib/redux/createStore';
 import reducers from './reducers';
-
-const addPromiseSupportToDispatch = (store) => {
-  const rawDispatch = store.dispatch;
-  return (action) => {
-    /*
-     * Now, we can dispatch both actions and promises that resolve to actions
-     * */
-    if (typeof action.then === 'function') {
-      /* Wait for the promise to resolve before dispatching the action */
-      return action.then(rawDispatch);
-    }
-    return rawDispatch(action);
-  };
-};
-
-const addLoggingToDispatch = (store) => {
-  /* eslint-disable no-console */
-  const rawDispatch = store.dispatch;
-  if (!console.group) {
-    return rawDispatch;
-  }
-  return (action) => {
-    console.group(action.type);
-    console.log('%c prev state', 'color:grey', store.getState());
-    console.log('%c action', 'color:blue', action);
-    rawDispatch(action);
-    console.log('%c next state', 'color:green', store.getState());
-    console.groupEnd();
-  };
-  /* eslint-disable no-console */
-};
+import { applyMiddleware } from '../../../lib/redux';
+import logger from '../../../lib/redux-logger';
+import promise from '../../../lib/redux-promise';
 
 const configureStore = () => {
   /** hydrating persisted data */
@@ -38,18 +10,22 @@ const configureStore = () => {
 
   /**
    * the order in which we override the dispatch function is important
-   * logging <-- promise
+   * logging <-- promise (order in which action propagate)
    * promises should be resolved before the action is logged
    * */
 
   /* const store = createStore(reducers, preloadedState); */
   const store = createStore(reducers);
+  const middlewares = [promise]; // order in which the action propagate
 
   if (__DEV__) {
-    store.dispatch = addLoggingToDispatch(store);
+    // store.dispatch = addLoggingToDispatch(store);
+    middlewares.push(logger);
   }
 
-  store.dispatch = addPromiseSupportToDispatch(store);
+  // store.dispatch = addPromiseSupportToDispatch(store); order in which the dispatch is overridden
+
+  applyMiddleware(store, middlewares);
 
   /*
   store.subscribe(

@@ -3,9 +3,9 @@ const applyMiddleware = (store, middlewares) => {
   middlewares
     .slice()
     .reverse()
-    .forEach(() => {
+    .forEach((middleware) => {
       // eslint-disable-next-line no-param-reassign
-      store.dispatch = middlewares(store)(store.dispatch);
+      store.dispatch = middleware(store)(store.dispatch);
     });
 };
 

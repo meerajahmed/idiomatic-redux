@@ -20,3 +20,5 @@ export default combineReducers({
  * so that the components don’t have to rely on it.
  * */
 export const getVisibleTodos = (state, filter) => fromTodos.getVisibleTodos(state.todos, filter);
+
+export const getIsFetching = (state, filter) => fromTodos.getIsFetching(state, filter);

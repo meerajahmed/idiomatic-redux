@@ -7,6 +7,11 @@ const addTodos = (text) => ({
   text,
 });
 
+const requestTodos = (filter) => ({
+  type: 'REQUEST_TODOS',
+  filter,
+});
+
 const receiveTodos = (filter, response) => ({
   type: 'RECEIVE_TODOS',
   filter,
@@ -27,4 +32,4 @@ const setVisibilityFilter = (filter) => ({
   filter,
 });
 
-export { addTodos, fetchTodos, toggleTodos, setVisibilityFilter };
+export { addTodos, fetchTodos, requestTodos, toggleTodos, setVisibilityFilter };

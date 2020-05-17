@@ -4,9 +4,9 @@ const promise = () => (next) => (action) => {
    * */
   if (typeof action.then === 'function') {
     /* Wait for the promise to resolve before dispatching the action */
-    return action.then(next);
+    action.then(next);
   }
-  return next(action);
+  next(action);
 };
 
 export default promise;

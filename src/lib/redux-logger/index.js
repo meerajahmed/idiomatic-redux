@@ -14,6 +14,6 @@ const logger = (store) => (next) => {
     console.log('%c next state', 'color:green', store.getState());
     console.groupEnd();
   };
-  /* eslint-disable no-console */
+  /* eslint-enable no-console */
 };
 export default logger;

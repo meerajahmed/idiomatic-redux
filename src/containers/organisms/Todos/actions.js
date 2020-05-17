@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import * as api from '../../../api';
+import { getIsFetching } from './reducers';
 
 const addTodos = (text) => ({
   type: 'ADD_TODO',
@@ -30,14 +31,21 @@ const receiveTodos = (filter, response) => ({
  * Components specify the intention to start an async operation without worrying which
  * actions get dispatched and when.
  */
-const fetchTodos = (filter) => /* thunk */ (dispatch) => {
+const fetchTodos = (filter) => /* thunk */ (dispatch, getState) => {
+  /*
+   * conditionally dispatch actions to avoid unnecessary network requests and potential race conditions
+   * */
+  if (getIsFetching(getState(), filter)) {
+    return Promise.resolve();
+  }
+
   /*
    * Thunk -> functions returned from other functions
    * It lets us dispatch multiple actions asynchronously
    * It can dispatch both plain object actions and other thunks
    * */
   dispatch(requestTodos(filter));
-  api.fetchTodos(filter).then((response) => {
+  return api.fetchTodos(filter).then((response) => {
     dispatch(receiveTodos(filter, response));
   });
 };

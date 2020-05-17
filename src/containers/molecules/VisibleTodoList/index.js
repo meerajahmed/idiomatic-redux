@@ -24,14 +24,13 @@ class VisibleTodoList extends Component {
   }
 
   fetchData = () => {
-    const { filter, fetchTodos, requestTodos } = this.props;
-    requestTodos(filter);
+    const { filter, fetchTodos } = this.props;
     fetchTodos(filter);
   };
 
   render() {
     const { isFetching, todos, onTodoClick } = this.props;
-    // show loading only when ther is no cached todos to show
+    // show loading only when there is no cached todos to show
     if (isFetching && !todos.length) {
       return <p>Loading...</p>;
     }
@@ -61,15 +60,11 @@ const mapDispatchToProps = (dispatch) => ({
   fetchTodos(filter) {
     dispatch(actions.fetchTodos(filter));
   },
-  requestTodos(filter) {
-    dispatch(actions.requestTodos(filter));
-  },
 });
 
 VisibleTodoList.propTypes = {
   filter: PropTypes.string.isRequired,
   fetchTodos: PropTypes.func.isRequired,
-  requestTodos: PropTypes.func.isRequired,
   onTodoClick: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   todos: PropTypes.arrayOf(

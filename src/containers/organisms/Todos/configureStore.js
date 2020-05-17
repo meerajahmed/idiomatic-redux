@@ -2,7 +2,7 @@ import createStore from '../../../lib/redux/createStore';
 import reducers from './reducers';
 import { applyMiddleware } from '../../../lib/redux';
 import logger from '../../../lib/redux-logger';
-import promise from '../../../lib/redux-promise';
+import thunk from '../../../lib/redux-thunk';
 
 const configureStore = () => {
   /** hydrating persisted data */
@@ -16,9 +16,10 @@ const configureStore = () => {
 
   /* const store = createStore(reducers, preloadedState); */
   const store = createStore(reducers);
-  const middlewares = [promise]; // order in which the action propagate
+  const middlewares = [thunk]; // order in which the action propagate
 
   if (__DEV__) {
+    // use process.env.NODE !== 'production' in lib files instead of custom global __DEV__
     // store.dispatch = addLoggingToDispatch(store);
     middlewares.push(logger);
   }

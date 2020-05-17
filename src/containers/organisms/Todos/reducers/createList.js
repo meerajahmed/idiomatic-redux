@@ -28,7 +28,7 @@ const createList = (filter) => {
     }
   };
 
-  combineReducers({
+  return combineReducers({
     ids,
     isFetching,
   });

@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom';
 import TodoList from '../../../components/molecules/TodoList';
 import { connect } from '../../../lib/react-redux';
 import * as actions from '../../organisms/Todos/actions';
-import { getVisibleTodos, getIsFetching } from '../../organisms/Todos/reducers';
+import { getVisibleTodos, getIsFetching, getErrorMessage } from '../../organisms/Todos/reducers';
+import FetchError from '../../../components/molecules/FetchError';
 
 /**
  * All container components are similar. Their job is to connect a presentational component to the
@@ -29,11 +30,16 @@ class VisibleTodoList extends Component {
   };
 
   render() {
-    const { isFetching, todos, onTodoClick } = this.props;
+    const { isFetching, errorMessage, todos, onTodoClick } = this.props;
     // show loading only when there is no cached todos to show
     if (isFetching && !todos.length) {
       return <p>Loading...</p>;
     }
+
+    if (errorMessage && !todos.length) {
+      return <FetchError message={errorMessage} onRetry={() => this.fetchData()} />;
+    }
+
     return <TodoList todos={todos} onTodoClick={onTodoClick} />;
   }
 }
@@ -48,6 +54,7 @@ const mapStateToProps = (state, props) => {
   return {
     todos: getVisibleTodos(state, filter),
     isFetching: getIsFetching(state, filter),
+    errorMessage: getErrorMessage(state, filter),
     filter,
   };
 };
@@ -62,8 +69,13 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
+VisibleTodoList.defaultProps = {
+  errorMessage: null,
+};
+
 VisibleTodoList.propTypes = {
   filter: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string,
   fetchTodos: PropTypes.func.isRequired,
   onTodoClick: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,

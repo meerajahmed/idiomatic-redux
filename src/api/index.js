@@ -23,6 +23,13 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // eslint-disable-next-line import/prefer-default-export
 export const fetchTodos = (filter) =>
   delay(500).then(() => {
+    /*
+     * simulate API request failure
+     * */
+    if (Math.random() > 0.7) {
+      throw new Error('API error');
+    }
+
     switch (filter) {
       case 'all':
         return fakeDatabase.todos;

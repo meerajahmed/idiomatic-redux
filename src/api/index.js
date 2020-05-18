@@ -14,7 +14,7 @@ const fakeDatabase = {
     },
     {
       id: '6a0dbc92-0efc-49e1-ab37-9a6fc3fe3ce9',
-      text: 'lets go',
+      text: "let's go",
       completed: true,
     },
   ],

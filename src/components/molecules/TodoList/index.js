@@ -9,7 +9,7 @@ const TodoList = (props) => {
   // eslint-disable-next-line react/prop-types
   const { todos, onTodoClick } = props;
   return (
-    <List dens>
+    <List dens="true">
       {/* eslint-disable-next-line react/prop-types */}
       {todos.map((todo) => {
         const labelId = `checkbox-list-label-${todo.id}`;

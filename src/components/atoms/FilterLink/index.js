@@ -12,7 +12,7 @@ const FilterLink = ({ filter, children }) => (
   <Link
     component={NavLink}
     exact
-    to={`${process.env.ROUTE_TODO}${filter === 'all' ? '' : `/${filter}`}`}
+    to={`${filter === 'all' ? '' : `/${filter}`}`}
     activeStyle={activeStyle}
   >
     {children}

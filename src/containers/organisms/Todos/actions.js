@@ -1,12 +1,13 @@
-import { v4 as uuid } from 'uuid';
 import * as api from '../../../api';
 import { getIsFetching } from './reducers';
 
-const addTodos = (text) => ({
-  type: 'ADD_TODO',
-  id: uuid(),
-  text,
-});
+const addTodos = (text) => (dispatch) =>
+  api.addTodo(text).then((response) => {
+    dispatch({
+      type: 'ADD_TODO_SUCCESS',
+      response,
+    });
+  });
 
 const requestTodos = (filter) => ({
   type: 'FETCH_TODOS_REQUEST',

@@ -7,6 +7,12 @@ const byId = (state = {}, action) => {
       });
       return newState;
     }
+    case 'ADD_TODO_SUCCESS': {
+      return {
+        ...state,
+        [action.response.id]: action.response,
+      };
+    }
     default:
       return state;
   }

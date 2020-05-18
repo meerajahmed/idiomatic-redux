@@ -9,14 +9,20 @@ const addTodos = (text) => ({
 });
 
 const requestTodos = (filter) => ({
-  type: 'REQUEST_TODOS',
+  type: 'FETCH_TODOS_REQUEST',
   filter,
 });
 
 const receiveTodos = (filter, response) => ({
-  type: 'RECEIVE_TODOS',
+  type: 'FETCH_TODOS_SUCCESS',
   filter,
   response,
+});
+
+const errorTodos = (filter, message) => ({
+  type: 'FETCH_TODOS_FAILURE',
+  filter,
+  message,
 });
 
 /* asynchronous action creator */
@@ -45,9 +51,19 @@ const fetchTodos = (filter) => /* thunk */ (dispatch, getState) => {
    * It can dispatch both plain object actions and other thunks
    * */
   dispatch(requestTodos(filter));
-  return api.fetchTodos(filter).then((response) => {
-    dispatch(receiveTodos(filter, response));
-  });
+  return api.fetchTodos(filter).then(
+    (response) => {
+      dispatch(receiveTodos(filter, response));
+    },
+    (error) => {
+      dispatch(errorTodos(filter, error.message || 'Something went wrong!'));
+    }
+  );
+  /*
+   * Recommendation: don't use Promise.catch in this scenario because if one of your reducers or
+   * components throws while handling this action you'll get into the catch block and
+   * so you'll display an internal error message to the user in all scenario
+   * */
 };
 
 const toggleTodos = (id) => ({

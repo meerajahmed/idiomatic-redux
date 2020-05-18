@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@material-ui/core/Box';
 import TodoList from '../../../components/molecules/TodoList';
 import { connect } from '../../../lib/react-redux';
 import * as actions from '../../organisms/Todos/actions';
@@ -33,7 +35,11 @@ class VisibleTodoList extends Component {
     const { isFetching, errorMessage, todos, onTodoClick } = this.props;
     // show loading only when there is no cached todos to show
     if (isFetching && !todos.length) {
-      return <p>Loading...</p>;
+      return (
+        <Box display="flex" justifyContent="center">
+          <CircularProgress />
+        </Box>
+      );
     }
 
     if (errorMessage && !todos.length) {

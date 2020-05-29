@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
 const activeStyle = {
-  color: 'black',
-  fontWeight: '700',
+  color: 'grey',
+  textDecoration: 'none',
 };
 
 const FilterLink = ({ filter, children }) => (

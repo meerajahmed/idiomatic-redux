@@ -22,7 +22,6 @@ const Drawer = (props) => {
       <Divider />
       <List>
         <ListItemLink to={process.env.ROUTE_TODO} primary="Todo" />
-        <ListItemLink to={process.env.ROUTE_TASK} primary="Task" />
       </List>
     </MuiDrawer>
   );

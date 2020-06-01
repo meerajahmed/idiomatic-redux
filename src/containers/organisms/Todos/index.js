@@ -1,9 +1,7 @@
 import React from 'react';
 import { Provider } from '../../../lib/react-redux';
 import configureStore from './configureStore';
-import AddTodo from '../../../components/molecules/AddTodo';
-import VisibleTodoList from '../../molecules/VisibleTodoList';
-import FooterLinks from '../../../components/molecules/FooterLinks';
+import Todos from './Todos';
 
 const store = configureStore();
 
@@ -16,14 +14,12 @@ const store = configureStore();
  * load the data and specify the behavior.
  * */
 
-const Todos = () => {
+const App = () => {
   return (
     <Provider store={store}>
-      <AddTodo />
-      <VisibleTodoList />
-      <FooterLinks />
+      <Todos />
     </Provider>
   );
 };
 
-export default Todos;
+export default App;

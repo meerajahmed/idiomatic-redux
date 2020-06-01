@@ -67,10 +67,13 @@ const fetchTodos = (filter) => /* thunk */ (dispatch, getState) => {
    * */
 };
 
-const toggleTodos = (id) => ({
-  type: 'TOGGLE_TODO',
-  id,
-});
+const toggleTodos = (id) => (dispatch) =>
+  api.toggleTodo(id).then((response) => {
+    dispatch({
+      type: 'TOGGLE_TODO_SUCCESS',
+      response,
+    });
+  });
 
 const setVisibilityFilter = (filter) => ({
   type: 'SET_VISIBILITY_FILTER',

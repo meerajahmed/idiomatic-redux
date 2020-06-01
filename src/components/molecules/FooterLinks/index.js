@@ -1,4 +1,6 @@
 import React from 'react';
+import Divider from '@material-ui/core/Divider';
+import Box from '@material-ui/core/Box';
 import FilterLink from '../../atoms/FilterLink';
 
 /**
@@ -14,11 +16,14 @@ import FilterLink from '../../atoms/FilterLink';
 
 const FooterLinks = () => {
   return (
-    <p>
-      show: <FilterLink filter="all">All</FilterLink>{' '}
-      <FilterLink filter="active">Active</FilterLink>{' '}
-      <FilterLink filter="completed">Completed</FilterLink>
-    </p>
+    <Box my={8}>
+      <Divider />
+      <Box display="flex" justifyContent="flex-end" mt={8}>
+        <FilterLink filter="all">All</FilterLink>
+        <FilterLink filter="active">Active</FilterLink>
+        <FilterLink filter="completed">Completed</FilterLink>
+      </Box>
+    </Box>
   );
 };
 

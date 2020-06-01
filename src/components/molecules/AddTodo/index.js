@@ -1,7 +1,12 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import connect from '../../../lib/react-redux/connect';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Box from '@material-ui/core/Box';
 import { addTodos } from '../../../containers/organisms/Todos/actions';
+import connect from '../../../lib/react-redux/connect';
 
 /**
  * AddTodo cannot be classified as either a presentational component or as a container component because
@@ -19,28 +24,43 @@ import { addTodos } from '../../../containers/organisms/Todos/actions';
 class AddTodo extends Component {
   constructor(props) {
     super(props);
-    this.input = createRef();
+    this.state = { text: '' };
   }
 
-  onAddTodo = (text) => {
+  onSubmit = (event) => {
+    event.preventDefault();
+    this.onAddTodo();
+  };
+
+  onAddTodo = () => {
+    const { text = '' } = this.state;
+    if (!text.trim()) {
+      return;
+    }
     const { dispatch } = this.props;
     dispatch(addTodos(text));
+    this.setState(() => ({ text: '' }));
+  };
+
+  onInputChange = (event) => {
+    const text = event.target.value;
+    this.setState(() => ({ text }));
   };
 
   render() {
+    const { text } = this.state;
     return (
-      <>
-        <input type="text" ref={this.input} />
-        <button
-          type="button"
-          onClick={() => {
-            this.onAddTodo(this.input.current.value);
-            this.input.current.value = '';
-          }}
-        >
-          Add Todo
-        </button>
-      </>
+      <form onSubmit={this.onSubmit} autoComplete="off">
+        <FormControl fullWidth>
+          <InputLabel htmlFor="todos">Things to do...</InputLabel>
+          <Input id="todos" name="todos" value={text} onChange={this.onInputChange} />
+        </FormControl>
+        <Box my={4} display="flex" justifyContent="flex-end">
+          <Button type="submit" variant="outlined" color="primary" onClick={this.onAddTodo}>
+            Add todo
+          </Button>
+        </Box>
+      </form>
     );
   }
 }

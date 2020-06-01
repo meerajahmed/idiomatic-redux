@@ -1,4 +1,4 @@
-import omitDeep from './omitDeep';
 import debounce from './debounce';
 
-export { omitDeep, debounce };
+// eslint-disable-next-line import/prefer-default-export
+export { debounce };

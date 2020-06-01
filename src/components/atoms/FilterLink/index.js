@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+
+const activeStyle = {
+  color: 'grey',
+  textDecoration: 'none',
+};
 
 const FilterLink = ({ filter, children }) => (
-  <NavLink
+  <Link
+    component={NavLink}
     exact
-    to={`${process.env.ROUTE_TODO}${filter === 'all' ? '' : `/${filter}`}`}
-    activeStyle={{
-      textDecoration: 'none',
-      color: 'black',
-    }}
+    to={`${filter === 'all' ? '' : `/${filter}`}`}
+    activeStyle={activeStyle}
   >
     {children}
-  </NavLink>
+  </Link>
 );
 
 FilterLink.defaultProps = {
